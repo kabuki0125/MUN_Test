@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using MonobitEngine;
 using MonobitEngine.Definitions;
 
@@ -40,7 +39,20 @@ public class OfflineSceneReconnect : MonobitEngine.MonoBehaviour
     // GUIまわりの記述
     public void OnGUI()
     {
-		if( MonobitNetwork.isConnect )
+        // GUI用の解像度を調整する
+        Vector2 guiScreenSize = new Vector2(800, 480);
+        if (Screen.width > Screen.height)
+        {
+            // landscape
+            GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / guiScreenSize.x, Screen.height / guiScreenSize.y), Vector2.zero);
+        }
+        else
+        {
+            // portrait
+            GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / guiScreenSize.y, Screen.height / guiScreenSize.x), Vector2.zero);
+        }
+
+        if ( MonobitNetwork.isConnect )
 		{
 			// ルーム一覧を取得
 			m_RoomData = MonobitNetwork.GetRoomData();
@@ -75,7 +87,7 @@ public class OfflineSceneReconnect : MonobitEngine.MonoBehaviour
 			// メニューに戻る
 			if (GUILayout.Button("Return Menu", GUILayout.Width(100)))
 			{
-                SceneManager.LoadScene("SampleMenu", LoadSceneMode.Additive);
+				Application.LoadLevel("SampleMenu");
 			}
 		}
 	}

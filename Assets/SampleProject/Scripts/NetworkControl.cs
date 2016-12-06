@@ -29,6 +29,21 @@ public class NetworkControl : MonobitEngine.MonoBehaviour
             m_bDisconnect = false;
         }
     }
+    
+    /// <summary>
+    /// 部屋作成時のコールバック.
+    /// </summary>
+    public void OnCreateRoom()
+    {
+        Debug.Log("Create Room Success!!");
+    }
+    /// <summary>
+    /// 部屋作成失敗時のコールバック.
+    /// </summary>
+    public void OnCreateRoomFailed()
+    {
+        Debug.Log("Create Room Failed....");
+    }
 
     // 初期化
     void Start()
@@ -70,7 +85,7 @@ public class NetworkControl : MonobitEngine.MonoBehaviour
             if( GUILayout.Button("Disconnect", GUILayout.Width(150))){
                 m_bDisconnect = true; // 正常動作のため、bDisconnect を true にして、GUIウィンドウ表示をキャンセルする
                 MonobitNetwork.DisconnectServer();                                                  // サーバから切断
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Additive); // シーンをリロード
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); // シーンをリロード
             }
             
             // ルームに入室している場合
@@ -162,7 +177,7 @@ public class NetworkControl : MonobitEngine.MonoBehaviour
         }
     }
     
-    private string m_roomName = "";             // ルーム名
+    private string m_roomName = "room_name";    // ルーム名
     private GameObject m_playerObject = null;   // プレイヤーキャラクタ
     private bool m_bDisplayWindow = false;      // ウィンドウ表示フラグ
     private bool m_bConnectFailed = false;      // サーバ接続失敗フラグ

@@ -34,7 +34,13 @@ namespace MonobitEngine.Editor
             GeneralSettings(bPrefab);
 
             // 監視コンポーネントリストの設定
-            ObservedComponentListSettings();
+            try
+            {
+                ObservedComponentListSettings();
+            }
+            catch (Exception)
+            {
+            }
 
             // セーブ
             if (GUI.changed)

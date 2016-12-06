@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 /// <summary>
@@ -12,6 +11,6 @@ public class BtnRandomMatchingReconnect : MonoBehaviour
 	/// </summary>
 	public void SceneLoad()
 	{
-        SceneManager.LoadScene("OfflineSceneReconnect", LoadSceneMode.Additive);
+		Application.LoadLevel("OfflineSceneReconnect");
 	}
 }

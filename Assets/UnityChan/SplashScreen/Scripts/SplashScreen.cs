@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace UnityChan
@@ -9,7 +8,7 @@ namespace UnityChan
 	{
 		void NextLevel ()
 		{
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			Application.LoadLevel (Application.loadedLevel + 1);
 		}
 	}
 }

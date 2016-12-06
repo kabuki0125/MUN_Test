@@ -265,7 +265,7 @@ namespace MonobitEngine
             MethodInfo methodInfo = null;
             if (m_dicOnSerializeMethodInfos.TryGetValue(component, out methodInfo) != true)
             {
-                var result = MonobitNetwork.GetMethod<T>(MonobitNetworkingMessage.OnMonobitSerializeView.ToString(), out methodInfo);
+                var result = MonobitNetwork.GetMethod<T>(component, MonobitNetworkingMessage.OnMonobitSerializeView.ToString(), out methodInfo);
                 if (result == false)
                 {
                     methodInfo = null;

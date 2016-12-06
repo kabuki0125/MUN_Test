@@ -24,7 +24,8 @@ public class SD_Unitychan_PC : MonobitEngine.MonoBehaviour
         else
         {
             GameObject.Find("Main Camera").GetComponent<Camera>().enabled = false;
-			isMainCameraDisabled = true;
+            GameObject.Find("Main Camera").GetComponent<AudioListener>().enabled = false;
+            isMainCameraDisabled = true;
 		}
     }
 
@@ -32,8 +33,12 @@ public class SD_Unitychan_PC : MonobitEngine.MonoBehaviour
 	{
 		if( isMainCameraDisabled )
 		{
-			GameObject.Find("Main Camera").GetComponent<Camera>().enabled = true;
-		}
+            GameObject go = GameObject.Find("Main Camera");
+            if( go != null )
+            {
+                go.GetComponent<Camera>().enabled = true;
+            }
+        }
 	}
 
     // Update is called once per frame

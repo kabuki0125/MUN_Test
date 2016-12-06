@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class BtnReturnMenu : MonoBehaviour
@@ -9,6 +8,6 @@ public class BtnReturnMenu : MonoBehaviour
 	/// </summary>
 	public void SceneLoad()
 	{
-        SceneManager.LoadScene("SampleMenu", LoadSceneMode.Additive);
+		Application.LoadLevel("SampleMenu");
 	}
 }

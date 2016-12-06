@@ -17,6 +17,19 @@ public class OnlineScene : MonobitEngine.MonoBehaviour
     // GUI処理
     void OnGUI()
     {
+        // GUI用の解像度を調整する
+        Vector2 guiScreenSize = new Vector2(800, 480);
+        if (Screen.width > Screen.height)
+        {
+            // landscape
+            GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / guiScreenSize.x, Screen.height / guiScreenSize.y), Vector2.zero);
+        }
+        else
+        {
+            // portrait
+            GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / guiScreenSize.y, Screen.height / guiScreenSize.x), Vector2.zero);
+        }
+
         // プレイヤーIDの表示
         if (MonobitNetwork.player != null)
         {
@@ -78,19 +91,6 @@ public class OnlineScene : MonobitEngine.MonoBehaviour
 					MonobitNetwork.ChangeHost(MonobitNetwork.otherPlayersList[i]);
 				}
 			}
-
-            // バトル終了
-            if (battleEndFrame <= 0)
-            {
-                // ルームをオープンにする
-                room.open = true;
-
-				// 一旦切断する
-				MonobitNetwork.DisconnectServer();
-
-				// シーンをオフラインシーンへ
-				MonobitNetwork.LoadLevel(OfflineScene.SceneNameOffline);
-            }
         }
     }
 
@@ -117,12 +117,17 @@ public class OnlineScene : MonobitEngine.MonoBehaviour
                 battleEndFrame
             };
             monobitView.RPC("TickCount", MonobitTargets.Others, param);
+            
+            // バトル終了
+            if ( 0 == battleEndFrame ){
+                m_bGameStart = false;
+                
+                // ルームをオープンにする
+                MonobitNetwork.room.open = true;
+                
+                monobitView.RPC( "OnGameEnd", MonobitTargets.AllViaServer );
+            }
         }
-		
-#if false
-		// MonobitNetwork.SendOutgoingCommands()の動作確認用
-		MonobitNetwork.SendOutgoingCommands();
-#endif
     }
 
     // ゲームスタートを受信(RPC)
@@ -144,11 +149,19 @@ public class OnlineScene : MonobitEngine.MonoBehaviour
 
         // 出現させたことを確認
         spawnMyChara = true;
-		
-#if false
-		// RPCのOthersBufferedの確認用
-		monobitView.RPC( "BufferedPlayerId", MonobitTargets.OthersBuffered, MonobitNetwork.player.ID );
-#endif
+    }
+    
+    // ゲームエンドを受信(RPC)
+    [MunRPC]
+    void OnGameEnd()
+    {
+        Debug.Log( "OnGameEnd" );
+        
+        // 一旦切断する
+        MonobitNetwork.DisconnectServer();
+
+        // シーンをオフラインシーンへ
+        MonobitNetwork.LoadLevel(OfflineScene.SceneNameOffline);
     }
 
     // 制限時間を受信(RPC)
@@ -170,13 +183,4 @@ public class OnlineScene : MonobitEngine.MonoBehaviour
 		// シーンをオフラインシーンへ
 		MonobitNetwork.LoadLevel(OfflineScene.SceneNameOffline);
 	}
-
-#if false
-	// RPCのOthersBufferedの確認用(RPC)
-	[MunRPC]
-	void BufferedPlayerId( int playerId )
-	{
-		Debug.Log( System.String.Format( "BufferedPlayerId playerId={0}", playerId ) );
-	}
-#endif
 }

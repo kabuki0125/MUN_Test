@@ -32,8 +32,21 @@ public class SimpleChat : MonobitEngine.MonoBehaviour {
 	 */
 	void OnGUI()
 	{
-		// MUNサーバに接続している場合
-		if( MonobitNetwork.isConnect )
+        // GUI用の解像度を調整する
+        Vector2 guiScreenSize = new Vector2(800, 480);
+        if (Screen.width > Screen.height)
+        {
+            // landscape
+            GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / guiScreenSize.x, Screen.height / guiScreenSize.y), Vector2.zero);
+        }
+        else
+        {
+            // portrait
+            GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / guiScreenSize.y, Screen.height / guiScreenSize.x), Vector2.zero);
+        }
+
+        // MUNサーバに接続している場合
+        if ( MonobitNetwork.isConnect )
 		{
 			// ルームに入室している場合
 			if ( MonobitNetwork.inRoom )

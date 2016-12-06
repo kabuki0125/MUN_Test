@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using MonobitEngine;
 
 namespace Monobit.Support
@@ -68,7 +67,7 @@ namespace Monobit.Support
             bSelectMenu = false;
 
             // 全てのオブジェクトを消すため、シーンを再ロードする。
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Application.LoadLevel(Application.loadedLevel);
         }
         void OnJoinedLobby()
         {

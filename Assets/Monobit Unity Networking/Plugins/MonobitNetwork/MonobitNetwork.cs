@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MonobitEngine
 {
@@ -35,7 +34,7 @@ namespace MonobitEngine
             UnityEngine.SceneManagement.Scene s = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
             return s.name;
 #else
-                return SceneManager.GetActiveScene().name;
+                return Application.loadedLevelName;
 #endif
             }
         }
@@ -50,7 +49,7 @@ namespace MonobitEngine
 #if UNITY_MIN_5_3
             return UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
 #else
-                return SceneManager.GetActiveScene().buildIndex;
+                return Application.loadedLevel;
 #endif
             }
         }

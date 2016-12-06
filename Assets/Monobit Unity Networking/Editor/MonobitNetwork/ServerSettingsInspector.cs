@@ -38,6 +38,9 @@ namespace MonobitEngine.Editor
             // サーバ設定
             ServerSettings();
 
+            // 時間設定
+            TimeSettings();
+
             // データの更新
             if (GUI.changed)
             {
@@ -139,7 +142,7 @@ namespace MonobitEngine.Editor
                         ushort usPort = 0;
                         if (ushort.TryParse(port, out usPort) == true)
                         {
-                            m_Settings.SelfServerPort = usPort;
+							m_Settings.SelfServerPort = usPort;
                         }
                     }
                     break;
@@ -151,6 +154,38 @@ namespace MonobitEngine.Editor
 
             GUI.enabled = true;
 
+            EditorGUI.indentLevel = 0;
+            GUILayout.Space(5);
+        }
+        
+        /**
+         * 時間設定
+         */
+        private void TimeSettings()
+        {
+            EditorGUILayout.LabelField("Time Settings(ms)", EditorStyles.boldLabel);
+            
+            EditorGUI.indentLevel = 2;
+            GUILayout.Space(5);
+            GUI.enabled = ! EditorApplication.isPlaying;
+            
+            string oldHealthCheckUpdateTime = m_Settings.HealthCheckUpdateTime.ToString();
+            string newHealthCheckUpdateTime = EditorGUILayout.TextField( "Health Check", oldHealthCheckUpdateTime );
+            if ( oldHealthCheckUpdateTime != newHealthCheckUpdateTime ){
+                try{
+                    m_Settings.HealthCheckUpdateTime = uint.Parse( newHealthCheckUpdateTime );
+                }catch{}
+            }
+            
+            string oldServerConnectWaitTime = m_Settings.ServerConnectWaitTime.ToString();
+            string newServerConnectWaitTime = EditorGUILayout.TextField( "Server Connect", oldServerConnectWaitTime );
+            if ( oldServerConnectWaitTime != newServerConnectWaitTime ){
+                try{
+                    m_Settings.ServerConnectWaitTime = uint.Parse( newServerConnectWaitTime );
+                }catch{}
+            }
+            
+            GUI.enabled = true;
             EditorGUI.indentLevel = 0;
             GUILayout.Space(5);
         }
