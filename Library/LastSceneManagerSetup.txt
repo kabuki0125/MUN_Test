@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/SampleProject/Scenes/test_from_gdc2013sample.unity
-  isLoaded: 1
-  isActive: 1
